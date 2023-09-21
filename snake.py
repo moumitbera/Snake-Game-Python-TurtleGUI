@@ -1,4 +1,5 @@
 import turtle as t
+import time
 
 MOVE_DISTANCE = 20
 POSITION = [(0,0), (-20, 0), (-40, 0)]
@@ -11,12 +12,14 @@ class Snake:
     def __init__(self):
         # creating snake
         self.snakeBody = []
-        for pos in POSITION:
-            self.add_part(pos)
-        
+        self.create_snake()
         self.snake_head = self.snakeBody[0]
 
     
+    def create_snake(self):
+        for pos in POSITION:
+            self.add_part(pos)
+
     def add_part(self, position):
         turtle = t.Turtle(shape="square")
         turtle.penup()
@@ -50,4 +53,11 @@ class Snake:
         if self.snake_head.heading() != UP:
             self.snake_head.setheading(DOWN)
         
-
+    def reset_snake(self):
+        for parts in self.snakeBody:
+            parts.goto(1000, 1000)
+        time.sleep(1)
+        self.snakeBody.clear()
+        self.create_snake()
+        self.snake_head = self.snakeBody[0]
+        
