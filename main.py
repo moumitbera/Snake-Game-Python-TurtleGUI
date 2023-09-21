@@ -43,14 +43,16 @@ while game_on:
         or snake.snake_head.ycor() > 290
         or snake.snake_head.ycor() < -290
     ):
-        game_on = False
-        score_board.game_over()
+        
+        score_board.reset_game()
+        snake.reset_snake()
 
     # detect collision w/tail or body
     for part in snake.snakeBody[1:]:  # sliced list
         if snake.snake_head.distance(part) < 10:
-            game_on = False
-            score_board.game_over()
+            
+            score_board.reset_game()
+            snake.reset_snake()
 
 
 screen.exitonclick()
