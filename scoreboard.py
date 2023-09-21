@@ -11,15 +11,33 @@ class scoreBoard(turtle.Turtle):
         self.goto(0, 280)
         self.color("white")
         self.score = 0
+        self.high_score = self.get_high_score()
         self.ht()
-        self.write(f"Score: {self.score}", align=ALIGNMENT, font=FONT)
+        self.update_score()
+        
 
     def increase_score(self):
         self.score += 1
-        self.clear()
-        self.write(f"Score: {self.score}", align=ALIGNMENT, font=FONT)
+        self.update_score()
 
-    def game_over(self):
+    def update_score(self):
         self.clear()
-        self.goto(0,0)
-        self.write(f"GAME OVER!\nFinal Score: {self.score}", align=ALIGNMENT, font=FONT)
+        self.write(f"Score: {self.score} High Score: {self.get_high_score()}", align=ALIGNMENT, font=FONT)
+
+    def reset_game(self):
+        if self.score > self.high_score:
+            self.set_high_score(self.score)
+
+        self.score = 0
+        self.update_score()
+
+    #write the highscore
+    def set_high_score(self, score):
+        with open(file="high_score.txt", mode="w") as file:
+            file.write(str(score)) #str() converts into string, we could have also used f string
+    
+    #returns the highest score as an integer
+    def get_high_score(self):
+        with open(file="high_score.txt") as file:
+            highScore = file.read()
+        return int(highScore)
